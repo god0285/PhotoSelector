@@ -1,0 +1,166 @@
+﻿<Window 
+    x:Class="PhotoSelector.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:PhotoSelector"
+    mc:Ignorable="d"
+    Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <DockPanel>
+            <Menu
+                DockPanel.Dock="Top"
+                >
+                <MenuItem
+                    Header="파일"
+                    >
+                    <MenuItem
+                        Header="작업저장"
+                        Command="{Binding SaveWorkCommand}"
+                        />
+                    <MenuItem
+                        Header="불러오기"
+                        Command="{Binding LoadWrokCommand}"
+                        />
+                </MenuItem>
+            </Menu>
+
+            <ProgressBar
+                Height="16"
+                DockPanel.Dock="Bottom"
+                Minimum="{Binding ProgressMinmum}"
+                Maximum="{Binding ProgressMaximum}"
+                Value="{Binding ProgressCur}"
+                />
+
+            <Grid
+                DockPanel.Dock="Top"
+                >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" MinHeight="40"/>
+                    <RowDefinition Height="auto" MinHeight="24"/>
+                    <RowDefinition Height="80*"/>
+                </Grid.RowDefinitions>
+                <Grid
+                    Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48*"/>
+                        <ColumnDefinition Width="16*"/>
+                        <ColumnDefinition Width="16*"/>
+                        <ColumnDefinition Width="16*"/>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="24*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        Grid.Column="0"
+                        Margin="4"
+                        VerticalContentAlignment="Center"
+                        IsReadOnly="True"
+                        Text="{Binding ImgDirPath}"
+                        />
+                    <Button
+                        Grid.Column="1"
+                        Margin="4"
+                        Content="경로 찾기"
+                        Command="{Binding FindPathCommand}"
+                        />
+                    <Button
+                        Grid.Column="2"
+                        Margin="4"
+                        Content="시작"
+                        Command="{Binding StartSelectCommand}"
+                        />
+                    <Button
+                        Grid.Column="4"
+                        Margin="4"
+                        Content="남은 이미지들 저장"
+                        Command="{Binding SaveRemainImagesCommand}"
+                        />
+                    <Button
+                        Grid.Column="5"
+                        Margin="4"
+                        Content="선택된 이미지들 저장"
+                        Command="{Binding SaveImagesCommand}"
+                        />
+                </Grid>
+
+                <StackPanel
+                    Grid.Row="1"
+                    Orientation="Horizontal"
+                    >
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Margin="20 0 100 0"
+                        Text="{Binding SelectBeforeAllData.Count, StringFormat='남은 이미지 개수 : {0}'}"
+                        />
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{Binding SelectAfterAllData.Count, StringFormat='선택 된 이미지 개수 : {0}'}"
+                        />
+                </StackPanel>
+
+                <Grid
+                    Grid.Row="2"
+                    >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Grid.Column="0"
+                        Margin="4"
+                        Command="{Binding SelectLeftCommand}"
+                        CommandParameter="{Binding LeftImage}"
+                        Background="Transparent"
+                        >
+                        <Button.Content>
+                            <Image
+                                Grid.Column="0"
+                                Source="{Binding LeftImage.FileFullPath}"
+                                />
+                        </Button.Content>
+                    </Button>
+
+                    <Button
+                        Grid.Column="1"
+                        Margin="4"
+                        Content="보류"
+                        Command="{Binding HoldCommand}"
+                        />
+
+                    <Button
+                        Grid.Column="2"
+                        Margin="4"
+                        Command="{Binding SelectRightCommand}"
+                        CommandParameter="{Binding RightImage}"
+                        Background="Transparent"
+                        >
+                        <Button.Content>
+                            <Image
+                                Grid.Column="0"
+                                Source="{Binding RightImage.FileFullPath}"
+                                />
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </Grid>
+
+        </DockPanel>
+
+        <Border
+            Background="Black"
+            IsEnabled="False"
+            Opacity="0.5"
+            >
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </Style>
+            </Border.Style>
+        </Border>
+    </Grid>
+</Window>
