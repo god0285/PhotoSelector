@@ -94,6 +94,34 @@ namespace PhotoSelector
             }
         }
 
+        private double _LeftImageAngle;
+        public double LeftImageAngle
+        {
+            get => _LeftImageAngle;
+            set
+            {
+                if (_LeftImageAngle != value)
+                {
+                    _LeftImageAngle = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double _RightImageAngle;
+        public double RightImageAngle
+        {
+            get => _RightImageAngle;
+            set
+            {
+                if (_RightImageAngle != value)
+                {
+                    _RightImageAngle = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         private SelectData _LeftImage;
         public SelectData LeftImage
         {
@@ -199,7 +227,10 @@ namespace PhotoSelector
 
         private void ChangeImages()
         {
-            if(SelectBeforeAllData.Count <= 1 && 2 <= SelectAfterAllData.Count)
+            LeftImageAngle = 0;
+            RightImageAngle = 0;
+
+            if (SelectBeforeAllData.Count <= 1 && 2 <= SelectAfterAllData.Count)
             {
                 SelectBeforeAllData = SelectAfterAllData;
                 SelectAfterAllData.Clear();
@@ -432,6 +463,66 @@ namespace PhotoSelector
             
                 ChangeImages();
             }
+        }
+
+        private RelayCommand<object> _LeftImageLeftRotateCommand;
+        public ICommand LeftImageLeftRotateCommand
+        {
+            get
+            {
+                if (_LeftImageLeftRotateCommand == null) _LeftImageLeftRotateCommand = new RelayCommand<object>(LeftImageLeftRotate);
+                return _LeftImageLeftRotateCommand;
+            }
+        }
+
+        private void LeftImageLeftRotate(object obj)
+        {
+            LeftImageAngle -= 90;
+        }
+
+        private RelayCommand<object> _LeftImageRightRotateCommand;
+        public ICommand LeftImageRightRotateCommand
+        {
+            get
+            {
+                if (_LeftImageRightRotateCommand == null) _LeftImageRightRotateCommand = new RelayCommand<object>(LeftImageRightRotate);
+                return _LeftImageRightRotateCommand;
+            }
+        }
+
+        private void LeftImageRightRotate(object obj)
+        {
+            LeftImageAngle += 90;
+        }
+
+        private RelayCommand<object> _RightImageLeftRotateCommand;
+        public ICommand RightImageLeftRotateCommand
+        {
+            get
+            {
+                if (_RightImageLeftRotateCommand == null) _RightImageLeftRotateCommand = new RelayCommand<object>(RightImageLeftRotate);
+                return _RightImageLeftRotateCommand;
+            }
+        }
+
+        private void RightImageLeftRotate(object obj)
+        {
+            RightImageAngle -= 90;
+        }
+
+        private RelayCommand<object> _RightImageRightRotateCommand;
+        public ICommand RightImageRightRotateCommand
+        {
+            get
+            {
+                if (_RightImageRightRotateCommand == null) _RightImageRightRotateCommand = new RelayCommand<object>(RightImageRightRotate);
+                return _RightImageRightRotateCommand;
+            }
+        }
+
+        private void RightImageRightRotate(object obj)
+        {
+            RightImageAngle += 90;
         }
     }
 
