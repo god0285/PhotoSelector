@@ -232,8 +232,13 @@ namespace PhotoSelector
 
             if (SelectBeforeAllData.Count <= 1 && 2 <= SelectAfterAllData.Count)
             {
-                SelectBeforeAllData = SelectAfterAllData;
+                SelectBeforeAllData = new SelectDatas(SelectAfterAllData);
                 SelectAfterAllData.Clear();
+            }
+            else if(SelectBeforeAllData.Count <= 1 && SelectAfterAllData.Count == 1)
+            {
+                System.Windows.MessageBox.Show("끝");
+                return;
             }
 
             if(2 <= SelectBeforeAllData.Count)
@@ -399,7 +404,7 @@ namespace PhotoSelector
         
         private void SaveImages(object obj)
         {
-            SaveImage(SelectBeforeAllData, "SELECT");
+            SaveImage(SelectAfterAllData, "SELECT");
         }
 
         private RelayCommand<object> _SelectLeftCommand;
